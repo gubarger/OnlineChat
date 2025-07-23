@@ -16,7 +16,6 @@ struct ChatMessage {
 	std::string text;
 };
 
-static std::vector<ChatMessage> chatMessages;
 static char inputBuffer[256] = ""; // Buffer for input text
 
 class Interface {
@@ -39,6 +38,8 @@ public:
 	void HelpMarker(const char* desc);
 
 	Connection connect;
+
+	std::vector<ChatMessage> chatMessages;
 
 protected:
 	char clientName[256]; // Buffer under the name

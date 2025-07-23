@@ -148,11 +148,10 @@ bool Connection::ConnectToServer(const std::string& ip, int port) {
 void Connection::ClientThread() {
 	char buffer[4096];
 
-	while (running)
-	{
+	while (running) {
 		int bytesReceived = recv(clientSocket, buffer, sizeof(buffer), 0);
 
-		if (bytesReceived <= 0)
+		if (bytesReceived <= 0) 
 		{
 			Disconnect();
 			HandleError("Connection lost");
@@ -161,6 +160,11 @@ void Connection::ClientThread() {
 		}
 
 		std::string message(buffer, bytesReceived);
+
+		if (onMessage) 
+		{
+			onMessage(message);
+		}
 	}
 }
 

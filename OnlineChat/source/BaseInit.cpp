@@ -67,6 +67,22 @@ int BaseInit::initialize(const char* MainWindowTitle, int& wDisplay, int& hDispl
         throw std::runtime_error("Network initialization failed");
     }
 
+    _interface->connect.SetMessageCallback([_interface](const std::string& message) {
+        size_t colonPos = message.find(':');
+
+        if (colonPos != std::string::npos) 
+        {
+            std::string author = message.substr(0, colonPos);
+            std::string text = message.substr(colonPos + 2);
+        
+            _interface->chatMessages.push_back({ author, text });
+        }
+        else 
+        {
+            _interface->chatMessages.push_back({ "Unknown", message });
+        }
+    });
+
     // Main cycle
     while (!glfwWindowShouldClose(window))
     {

@@ -240,7 +240,7 @@ void Interface::CreateChatWindow() {
 	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), false,
 		ImGuiWindowFlags_HorizontalScrollbar);
 
-	for (const auto& msg : chatMessages)
+	for (const auto& msg : this->chatMessages)
 	{
 		ImGui::TextWrapped("%s: %s", msg.author.c_str(), msg.text.c_str());
 		ImGui::Separator();
@@ -309,7 +309,7 @@ void Interface::SendMessageInterface()
 		connect.SendMessageConnection(fullMessage);
 
 		// add local to history
-		chatMessages.push_back({ clientName, inputBuffer });
+		this->chatMessages.push_back({ clientName, inputBuffer });
 	}
 	else 
 	{

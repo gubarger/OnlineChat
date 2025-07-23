@@ -15,6 +15,7 @@
 class Connection {
 public:
 	using ErrorCallback = std::function<void(const std::string&)>;
+	using MessageCallback = std::function<void(const std::string&)>;
 
 	Connection() = default;
 	~Connection();
@@ -27,6 +28,10 @@ public:
 	void Disconnect();
 
 	void SendMessageConnection(const std::string& message);
+
+	void SetMessageCallback(MessageCallback callback) { 
+		onMessage = callback; 
+	}
 
 	// If there is, then it's true
 	bool isName() const {
@@ -65,6 +70,7 @@ private:
 
 	std::atomic<bool> running{ false };
 	ErrorCallback onError;
+	MessageCallback onMessage;
 
 	void ServerThread(int port);
 	void ClientThread();
